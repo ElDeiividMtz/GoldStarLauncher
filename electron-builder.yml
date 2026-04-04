@@ -1,8 +1,8 @@
-appId: 'helioslauncher'
-productName: 'Helios Launcher'
+appId: 'goldstarlauncher'
+productName: 'GoldStar Launcher'
 artifactName: '${productName}-setup-${version}.${ext}'
 
-copyright: 'Copyright © 2018-2026 Daniel Scalzi'
+copyright: 'Copyright © 2026 GoldStar Studio'
 
 asar: true
 compression: 'maximum'
@@ -39,10 +39,10 @@ mac:
 # Linux Configuration
 linux: 
   target: 'AppImage'
-  maintainer: 'Daniel Scalzi'
-  vendor: 'Daniel Scalzi'
-  synopsis: 'Modded Minecraft Launcher'
-  description: 'Custom launcher which allows users to join modded servers. All mods, configurations, and updates are handled automatically.'
+  maintainer: 'GoldStar Studio'
+  vendor: 'GoldStar Studio'
+  synopsis: 'GoldStar Minecraft Launcher'
+  description: 'Launcher oficial de GoldStar Studio. Todos los mods, configuraciones y actualizaciones se manejan automaticamente.'
   category: 'Game'
 
 
