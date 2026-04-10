@@ -9,18 +9,38 @@ const { Type }      = require('helios-distribution-types')
 const AuthManager   = require('./assets/js/authmanager')
 const ConfigManager = require('./assets/js/configmanager')
 const { DistroAPI } = require('./assets/js/distromanager')
+const RemoteConfig  = require('./assets/js/remoteConfig')
 
 let rscShouldLoad = false
 let fatalStartupError = false
 
-// Mapping of each view to their container IDs.
 const VIEWS = {
     landing: '#landingContainer',
     loginOptions: '#loginOptionsContainer',
     login: '#loginContainer',
     settings: '#settingsContainer',
     welcome: '#welcomeContainer',
-    waiting: '#waitingContainer'
+    waiting: '#waitingContainer',
+    series: '#seriesContainer'
+}
+
+function isFeatureEnabled(featureName) {
+    if (!RemoteConfig.isInitialized()) return true
+    const config = RemoteConfig.getConfig()
+    if (!config.features) return true
+    return config.features[featureName] !== false
+}
+
+function applyFeatureFlags() {
+    const externalMedia = document.getElementById('externalMedia')
+    if (externalMedia) externalMedia.style.display = isFeatureEnabled('socialLinks') ? '' : 'none'
+
+    const mojangBtn = document.getElementById('loginOptionMojang')
+    if (mojangBtn) mojangBtn.parentElement.style.display = isFeatureEnabled('mojangLogin') ? '' : 'none'
+
+    document.querySelectorAll('[data-feature]').forEach(el => {
+        el.style.display = isFeatureEnabled(el.dataset.feature) ? '' : 'none'
+    })
 }
 
 // The currently shown view container.
@@ -80,9 +100,16 @@ async function showMainUI(data){
             validateSelectedAccount()
         }
 
+        applyFeatureFlags()
+        if (typeof renderDynamicSocialLinks === 'function') renderDynamicSocialLinks()
+        if (typeof renderMediaSection === 'function') renderMediaSection()
+
         if(ConfigManager.isFirstLaunch()){
             currentView = VIEWS.welcome
             $(VIEWS.welcome).fadeIn(1000)
+        } else if(isFeatureEnabled('seriesEnabled') && !ConfigManager.getSeriesKey()) {
+            currentView = VIEWS.series
+            $(VIEWS.series).fadeIn(1000)
         } else {
             if(isLoggedIn){
                 currentView = VIEWS.landing

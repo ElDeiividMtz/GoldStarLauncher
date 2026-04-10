@@ -1,0 +1,25 @@
+<div id="seriesContainer" style="display: none;">
+    <div id="seriesContent">
+        <img id="seriesLogo" class="gs-logo" src="assets/images/SealCircle.png"/>
+        <span id="seriesHeader">Ingresa tu clave de serie</span>
+        <span id="seriesDescription">Introduce la clave proporcionada por tu streamer o comunidad para acceder a tu modpack exclusivo.</span>
+        <br>
+        <div id="seriesInputContainer">
+            <input id="seriesKeyInput" type="text" placeholder="CLAVE-DE-SERIE" maxlength="50" autocomplete="off" spellcheck="false"/>
+            <button id="seriesActivateBtn">
+                <div id="seriesActivateBtnContent">Activar</div>
+            </button>
+        </div>
+        <span id="seriesError" style="display: none;"></span>
+        <div id="seriesActiveInfo" style="display: none;">
+            <span id="seriesActiveName"></span>
+            <span id="seriesActiveStreamer"></span>
+            <button id="seriesChangeBtn">Cambiar serie</button>
+        </div>
+        <br>
+        <button id="seriesSkipBtn">
+            <div id="seriesSkipBtnContent">Continuar sin serie</div>
+        </button>
+    </div>
+    <script src="./assets/js/scripts/series.js"></script>
+</div>

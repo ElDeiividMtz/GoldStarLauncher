@@ -3,6 +3,211 @@
 
 /*******************************************************************************
  *                                                                             *
+ * GoldStar Theme Variables (sobreescribibles por temas remotos)               *
+ *                                                                             *
+ ******************************************************************************/
+
+:root {
+    /* Colores base — sobreescribibles por temas remotos */
+    --gs-primary: #d4af37;
+    --gs-primary-dark: #b8962e;
+    --gs-primary-rgb: 212, 175, 55;
+    --gs-background: #171614;
+    --gs-surface: #1a1a25;
+    --gs-surface-hover: #22222e;
+    --gs-text: #e0e0e0;
+    --gs-text-dim: rgba(255, 255, 255, 0.45);
+    --gs-border: rgba(255, 255, 255, 0.06);
+    --gs-glow: rgba(var(--gs-primary-rgb), 0.3);
+
+    /* Tipografia */
+    --gs-font: 'Avenir Book', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --gs-font-medium: 'Avenir Medium', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+    /* Radios */
+    --gs-radius: 8px;
+    --gs-radius-sm: 4px;
+    --gs-radius-lg: 12px;
+
+    /* Transiciones */
+    --gs-transition: 0.2s ease;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Series Selection View                                                       *
+ *                                                                             *
+ ******************************************************************************/
+
+#seriesContainer {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 100%);
+}
+
+#seriesContent {
+    text-align: center;
+    max-width: 420px;
+    padding: 40px;
+}
+
+#seriesLogo {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 4px 12px rgba(212, 175, 55, 0.3));
+}
+
+#seriesHeader {
+    display: block;
+    font-family: 'Avenir Medium';
+    font-size: 22px;
+    color: var(--gs-primary);
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+}
+
+#seriesDescription {
+    display: block;
+    font-family: 'Avenir Book';
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.5;
+}
+
+#seriesInputContainer {
+    display: flex;
+    gap: 8px;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+#seriesKeyInput {
+    padding: 12px 18px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    color: #ffffff;
+    font-family: 'Avenir Medium';
+    font-size: 15px;
+    text-align: center;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    width: 240px;
+    transition: border-color 0.25s ease;
+    outline: none;
+}
+
+#seriesKeyInput:focus {
+    border-color: var(--gs-primary);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+#seriesKeyInput::placeholder {
+    color: rgba(255, 255, 255, 0.25);
+    letter-spacing: 1px;
+    text-transform: none;
+}
+
+#seriesActivateBtn {
+    padding: 12px 24px;
+    background: linear-gradient(135deg, var(--gs-primary), var(--gs-primary-dark));
+    color: #0a0a0f;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Avenir Medium';
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#seriesActivateBtn:hover { opacity: 0.9; }
+#seriesActivateBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+#seriesError {
+    display: block;
+    margin-top: 12px;
+    color: #ff6b7a;
+    font-family: 'Avenir Book';
+    font-size: 12px;
+}
+
+#seriesActiveInfo {
+    margin-top: 20px;
+    padding: 16px;
+    background: rgba(212, 175, 55, 0.08);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 10px;
+}
+
+#seriesActiveName {
+    display: block;
+    font-family: 'Avenir Medium';
+    font-size: 18px;
+    color: var(--gs-primary);
+}
+
+#seriesActiveStreamer {
+    display: block;
+    font-family: 'Avenir Book';
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 4px;
+}
+
+#seriesChangeBtn {
+    margin-top: 12px;
+    padding: 6px 14px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    color: rgba(255, 255, 255, 0.6);
+    font-family: 'Avenir Book';
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#seriesChangeBtn:hover {
+    border-color: var(--gs-primary);
+    color: var(--gs-primary);
+}
+
+#seriesSkipBtn {
+    margin-top: 16px;
+    padding: 10px 20px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.4);
+    font-family: 'Avenir Book';
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.25s;
+}
+
+#seriesSkipBtn:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Animación shake para error */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-8px); }
+    40% { transform: translateX(8px); }
+    60% { transform: translateX(-4px); }
+    80% { transform: translateX(4px); }
+}
+.shake { animation: shake 0.4s ease; }
+
+/*******************************************************************************
+ *                                                                             *
  * Fonts                                                                       *
  *                                                                             *
  ******************************************************************************/
@@ -32,6 +237,18 @@
 body, html, div {
     margin: 0px;
     padding: 0px;
+}
+
+html, body {
+    overflow: hidden !important;
+    width: 100%;
+    height: 100%;
+}
+
+/* Ocultar scrollbar global */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none;
 }
 
 /* Reset p presets. */
@@ -104,14 +321,24 @@ body, button {
     -webkit-app-region: drag;
 }
 
-/* Frame logo (windows only). */
+/* Frame title (windows only). */
 #frameTitleDock {
-    padding: 0px 10px;
+    padding: 0px 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 100%;
+}
+#frameTitleIcon {
+    opacity: 0.8;
+    flex-shrink: 0;
 }
 #frameTitleText {
-    font-size: 14px;
-    font-family: 'Avenir Medium';
-    letter-spacing: 0.5px;
+    font-size: 11px;
+    font-family: var(--gs-font-medium);
+    letter-spacing: 0.8px;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
 }
 
 /* Windows frame button dock. */
@@ -3059,17 +3286,17 @@ input:checked + .toggleSwitchSlider:before {
 
 /* Social media icon shared styles. */
 .mediaSVG {
-    fill: #ffffff;
+    fill: rgba(255, 255, 255, 0.5);
     height: 12px;
-    transition: 0.25s ease;
+    transition: var(--gs-transition);
     cursor: pointer;
-    height: 12px;
     width: 25px;
 }
 .mediaSVG:hover,
-.mediaURL:focus .mediaSVG,
-.mediaSVG:active {
-    height: 20px;
+.mediaURL:focus .mediaSVG {
+    fill: var(--gs-primary);
+    height: 16px;
+    filter: drop-shadow(0 0 6px var(--gs-glow));
 }
 
 /* Social media URL shared styles. */
@@ -3399,25 +3626,29 @@ input:checked + .toggleSwitchSlider:before {
     border: none;
     cursor: pointer;
     font-weight: 900;
-    letter-spacing: 2px;
-    text-shadow: 0px 0px 0px #bebcbb;
+    font-family: var(--gs-font-medium);
+    letter-spacing: 3px;
+    text-shadow: 0px 0px 0px var(--gs-primary);
     font-size: 20px;
     padding: 0px;
-    transition: 0.25s ease;
+    transition: var(--gs-transition);
     outline: none;
+    color: var(--gs-text);
 }
 #launch_button:hover,
 #launch_button:focus {
-    text-shadow: 0px 0px 20px #fff, 0px 0px 20px #fff;
+    text-shadow: 0px 0px 20px var(--gs-primary), 0px 0px 40px var(--gs-primary);
+    color: var(--gs-primary);
 }
 #launch_button:active {
-    color: #c7c7c7;
-    text-shadow: 0px 0px 20px #c7c7c7, 0px 0px 20px #c7c7c7;
+    color: var(--gs-primary-dark);
+    text-shadow: 0px 0px 20px var(--gs-primary-dark);
 }
 #launch_button:disabled {
-    color: #c7c7c7;
+    color: rgba(255, 255, 255, 0.3);
     cursor: default;
     pointer-events: none;
+    text-shadow: none;
 }
 
 /* Launch details main container, hidden until launch processing begins. */
@@ -3488,6 +3719,98 @@ input:checked + .toggleSwitchSlider:before {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Media Section (dynamic, from remote-config)                                 *
+ *                                                                             *
+ ******************************************************************************/
+
+#mediaSection {
+    position: absolute;
+    bottom: 24%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+    max-width: 700px;
+    z-index: 400;
+    pointer-events: auto;
+}
+
+#mediaSectionContent {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 8px 0;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.2) transparent;
+}
+
+#mediaSectionContent::-webkit-scrollbar {
+    height: 4px;
+}
+#mediaSectionContent::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.2);
+    border-radius: 2px;
+}
+
+.media-item {
+    flex-shrink: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.media-item:hover {
+    transform: translateY(-2px);
+    border-color: rgba(212, 175, 55, 0.3);
+}
+
+.media-image {
+    max-width: 280px;
+}
+
+.media-image img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    display: block;
+}
+
+.media-video {
+    width: 320px;
+}
+
+.media-info {
+    width: 220px;
+    padding: 14px;
+}
+
+.media-info h4 {
+    font-family: 'Avenir Medium';
+    font-size: 13px;
+    color: var(--gs-primary);
+    margin-bottom: 6px;
+}
+
+.media-info p {
+    font-family: 'Avenir Book';
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.4;
+}
+
+.media-caption {
+    display: block;
+    padding: 6px 10px;
+    font-family: 'Avenir Book';
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.7);
+    background: rgba(0, 0, 0, 0.4);
 }
 
 /*******************************************************************************
@@ -3938,31 +4261,28 @@ input:checked + .toggleSwitchSlider:before {
     justify-content: center;
 }
 
-/* Stationary image for the spinner. */
+/* Logo de carga con glow dorado pulsante */
 #loadCenterImage {
-    position: absolute;
-    width: 277px;
-    height: auto;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: contain;
 }
 
-/* Rotating image for the spinner. */
-#loadSpinnerImage {
-    width: 280px;
-    height: auto;
-    z-index: 400;
+/* Animacion de pulso dorado en el borde */
+.gs-pulse {
+    animation: gsPulse 2s ease-in-out infinite;
+    filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.4));
 }
 
-/* Rotating animation for the spinner. */
-@keyframes rotating {
-    from {
-        transform: rotate(0deg);
+@keyframes gsPulse {
+    0%, 100% {
+        filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.3));
+        transform: scale(1);
     }
-    to {
-        transform: rotate(360deg);
+    50% {
+        filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.8))
+               drop-shadow(0 0 40px rgba(212, 175, 55, 0.3));
+        transform: scale(1.03);
     }
-}
-
-/* Class which is applied when the spinner image is spinning. */
-.rotating {
-    animation: rotating 10s linear infinite;
 }

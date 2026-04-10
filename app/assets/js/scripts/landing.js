@@ -30,6 +30,8 @@ const {
 // Internal Requirements
 const DiscordWrapper          = require('./assets/js/discordwrapper')
 const ProcessBuilder          = require('./assets/js/processbuilder')
+const AutoUpdateManager       = require('./assets/js/autoUpdateManager')
+// RemoteConfig ya declarado globalmente en uibinder.js
 
 // Launch Elements
 const launch_content          = document.getElementById('launch_content')
@@ -41,6 +43,76 @@ const server_selection_button = document.getElementById('server_selection_button
 const user_text               = document.getElementById('user_text')
 
 const loggerLanding = LoggerUtil.getLogger('Landing')
+
+// SVG icons para social links (embebidos, sin internet)
+const SOCIAL_ICONS = {
+    discord: '<svg viewBox="35.34 34.36 70.68 68.72"><path d="M81.23,78.48a6.14,6.14,0,1,1,6.14-6.14,6.14,6.14,0,0,1-6.14,6.14M60,78.48a6.14,6.14,0,1,1,6.14-6.14A6.14,6.14,0,0,1,60,78.48M104.41,73c-.92-7.7-8.24-22.9-8.24-22.9A43,43,0,0,0,88,45.59a17.88,17.88,0,0,0-8.38-1.27l-.13,1.06a23.52,23.52,0,0,1,5.8,1.95,87.59,87.59,0,0,1,8.17,4.87s-10.32-5.63-22.27-5.63a51.32,51.32,0,0,0-23.2,5.63,87.84,87.84,0,0,1,8.17-4.87,23.57,23.57,0,0,1,5.8-1.95l-.13-1.06a17.88,17.88,0,0,0-8.38,1.27,42.84,42.84,0,0,0-8.21,4.56S37.87,65.35,37,73s-.37,11.54-.37,11.54,4.22,5.68,9.9,7.14,7.7,1.47,7.7,1.47l3.75-4.68a21.22,21.22,0,0,1-4.65-2A24.47,24.47,0,0,1,47.93,82S61.16,88.4,70.68,88.4c10,0,22.75-6.44,22.75-6.44a24.56,24.56,0,0,1-5.35,4.56,21.22,21.22,0,0,1-4.65,2l3.75,4.68s2,0,7.7-1.47,9.89-7.14,9.89-7.14.55-3.85-.37-11.54"/></svg>',
+    x: '<svg viewBox="0 0 275 275"><path d="m236 0h46l-101 115 118 156h-92.6l-72.5-94.8-83 94.8h-46l107-123-113-148h94.9l65.5 86.6zm-16.1 244h25.5l-165-218h-27.4z"/></svg>',
+    instagram: '<svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>',
+    youtube: '<svg viewBox="35.34 34.36 70.68 68.72"><path d="M84.8,69.52,65.88,79.76V59.27Zm23.65.59c0-5.14-.79-17.63-3.94-20.57S99,45.86,73.37,45.86s-28,.73-31.14,3.68S38.29,65,38.29,70.11s.79,17.63,3.94,20.57,5.52,3.68,31.14,3.68,28-.74,31.14-3.68,3.94-15.42,3.94-20.57"/></svg>',
+    link: '<svg viewBox="35.34 34.36 70.68 68.72"><path d="M75.37,65.51a3.85,3.85,0,0,0-1.73.42,8.22,8.22,0,0,1,.94,3.76A8.36,8.36,0,0,1,66.23,78H46.37a8.35,8.35,0,1,1,0-16.7h9.18a21.51,21.51,0,0,1,6.65-8.72H46.37a17.07,17.07,0,1,0,0,34.15H66.23A17,17,0,0,0,82.77,65.51Z"/><path d="M66,73.88a3.85,3.85,0,0,0,1.73-.42,8.22,8.22,0,0,1-.94-3.76,8.36,8.36,0,0,1,8.35-8.35H95A8.35,8.35,0,1,1,95,78H85.8a21.51,21.51,0,0,1-6.65,8.72H95a17.07,17.07,0,0,0,0-34.15H75.13A17,17,0,0,0,58.59,73.88Z"/></svg>'
+}
+
+function renderDynamicSocialLinks() {
+    const container = document.getElementById('externalMedia')
+    if (!container) return
+
+    let links = []
+
+    if (RemoteConfig.isInitialized()) {
+        const config = RemoteConfig.getConfig()
+        if (config.ui && Array.isArray(config.ui.socialLinks) && config.ui.socialLinks.length > 0) {
+            links = config.ui.socialLinks
+        }
+    }
+
+    if (links.length === 0) {
+        const defaults = [
+            { icon: 'link', url: Lang.queryJS('landing.mediaGitHubURL'), tooltip: 'GitHub' },
+            { icon: 'x', url: Lang.queryJS('landing.mediaXURL'), tooltip: 'X' },
+            { icon: 'instagram', url: Lang.queryJS('landing.mediaInstagramURL'), tooltip: 'Instagram' },
+            { icon: 'youtube', url: Lang.queryJS('landing.mediaYouTubeURL'), tooltip: 'YouTube' },
+            { icon: 'discord', url: Lang.queryJS('landing.mediaDiscordURL'), tooltip: 'Discord' },
+        ]
+        links = defaults.filter(l => l.url && l.url !== '#')
+    }
+
+    container.innerHTML = links.map(link => {
+        const svg = SOCIAL_ICONS[link.icon] || SOCIAL_ICONS['link']
+        return `<div class="mediaContainer"><a href="${link.url}" class="mediaURL" title="${link.tooltip || ''}">${svg}</a></div>`
+    }).join('')
+
+    container.querySelectorAll('.mediaURL').forEach(el => {
+        el.addEventListener('click', () => document.activeElement.blur())
+    })
+}
+
+function renderMediaSection() {
+    // Media section desde remote-config (opcional)
+    const section = document.getElementById('mediaSection')
+    if (!section) return
+    if (!RemoteConfig.isInitialized()) return
+
+    const config = RemoteConfig.getConfig()
+    const media = config.ui?.media
+    if (!media || !Array.isArray(media) || media.length === 0) {
+        section.style.display = 'none'
+        return
+    }
+
+    section.style.display = ''
+    const container = document.getElementById('mediaSectionContent')
+    if (!container) return
+
+    container.innerHTML = media.map(item => {
+        if (item.type === 'image') {
+            return `<div class="media-item media-image"><img src="${item.url}" alt="${item.title || ''}" loading="lazy">${item.title ? `<span class="media-caption">${item.title}</span>` : ''}</div>`
+        } else if (item.type === 'info') {
+            return `<div class="media-item media-info">${item.title ? `<h4>${item.title}</h4>` : ''}${item.body ? `<p>${item.body}</p>` : ''}</div>`
+        }
+        return ''
+    }).join('')
+}
 
 /* Launch Progress Wrapper Functions */
 

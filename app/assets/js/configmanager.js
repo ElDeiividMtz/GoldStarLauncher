@@ -86,7 +86,9 @@ const DEFAULT_CONFIG = {
         },
         launcher: {
             allowPrerelease: false,
-            dataDirectory: dataPath
+            dataDirectory: dataPath,
+            modpackUrl: 'https://goldstarlauncher.goldstarstudio.net',
+            seriesKey: null
         }
     },
     newsCache: {
@@ -790,4 +792,20 @@ exports.getAllowPrerelease = function(def = false){
  */
 exports.setAllowPrerelease = function(allowPrerelease){
     config.settings.launcher.allowPrerelease = allowPrerelease
+}
+
+exports.getModpackUrl = function(){
+    return config.settings.launcher.modpackUrl || null
+}
+
+exports.setModpackUrl = function(url){
+    config.settings.launcher.modpackUrl = url
+}
+
+exports.getSeriesKey = function(){
+    return config.settings.launcher.seriesKey || null
+}
+
+exports.setSeriesKey = function(key){
+    config.settings.launcher.seriesKey = key
 }

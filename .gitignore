@@ -4,3 +4,18 @@
 /target/
 /logs/
 /dist/
+
+# Archivos sensibles
+goldstar.xml
+*.pem
+*.key
+.env
+
+# Claude/IDE
+.claude/settings.local.json
+
+# Server (dashboard PHP - no va al repo del launcher)
+/server/
+
+# Tools
+/tools/

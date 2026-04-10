@@ -13,7 +13,8 @@
   "main": "index.js",
   "scripts": {
     "start": "electron .",
-    "dist": "electron-builder build",
+    "obfuscate": "node tools/obfuscate.js",
+    "dist": "npm run obfuscate && electron-builder build",
     "dist:win": "npm run dist -- -w",
     "dist:mac": "npm run dist -- -m",
     "dist:linux": "npm run dist -- -l",
@@ -43,7 +44,8 @@
     "@stylistic/eslint-plugin": "^5.6.1",
     "electron": "^39.2.7",
     "electron-builder": "^26.4.0",
-    "eslint": "^9.39.2"
+    "eslint": "^9.39.2",
+    "terser": "^5.46.1"
   },
   "repository": {
     "type": "git",

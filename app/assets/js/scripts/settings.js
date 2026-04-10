@@ -1453,7 +1453,7 @@ function populateAboutVersionInformation(){
  */
 function populateReleaseNotes(){
     $.ajax({
-        url: 'https://github.com/ElDeiividMtz/GoldStarLauncher/releases.atom',
+        url: 'https://goldstarlauncher.goldstarstudio.net/releases.atom',
         success: (data) => {
             const version = 'v' + remote.app.getVersion()
             const entries = $(data).find('entry')
@@ -1466,7 +1466,7 @@ function populateReleaseNotes(){
                 if(id === version){
                     settingsAboutChangelogTitle.innerHTML = entry.find('title').text()
                     settingsAboutChangelogText.innerHTML = entry.find('content').text()
-                    settingsAboutChangelogButton.href = entry.find('link').attr('href')
+                    settingsAboutChangelogButton.href = entry.find('link').attr('href') || 'https://goldstarstudio.net'
                 }
             }
 
